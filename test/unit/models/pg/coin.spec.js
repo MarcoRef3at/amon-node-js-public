@@ -4,7 +4,7 @@ const sequelizeMockingMocha = require('sequelize-mocking').sequelizeMockingMocha
 const Models = require(path.join(srcDir, '/models/pg'));
 const DB = require(path.join(srcDir, 'modules/db'));
 
-describe('Model:coin', () => {
+describe.only('Model:coin', () => {
   let sandbox = null;
 
   sequelizeMockingMocha(DB.sequelize, [path.resolve('test/mocks/coins.json')], { logging: false });
@@ -26,6 +26,23 @@ describe('Model:coin', () => {
 
     expect(coin.name).to.eq('Bitcoin Cash');
     expect(coin.code).to.eq('BCH');
+  });
+
+  it('Should validate unique code', async () => {
+    const coin1 = await Models.Coin.create({
+      name: 'Bitcoin Cash',
+      code: 'BCH',
+    });
+    try {
+      const coin2 = await Models.Coin.create({
+        name: 'Bitcoin Cash',
+        code: 'BCH',
+      });
+      expect.fail();
+    } catch (error) {
+      expect(error['name']).to.be.equal('SequelizeUniqueConstraintError');
+      expect(error['errors'][0]['message']).to.be.equal('code must be unique');
+    }
   });
 
   it('Should find by coinCode', async () => {
