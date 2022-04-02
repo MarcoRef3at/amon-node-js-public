@@ -1,13 +1,25 @@
+const coingecko = require('../../../helpers/coingecko');
 const errors = require('../../../helpers/errors');
 const Models = require('../../../models/pg');
 
 const CoinController = {
   async getCoinByCode(coinCode) {
-    const coin = await Models.Coin.findByCoinCode(coinCode);
+    let coin = await Models.Coin.findByCoinCode(coinCode);
 
     errors.assertExposable(coin, 'unknown_coin_code');
 
-    return coin.filterKeys();
+    // Filter coin object parameters
+    coin = coin.filterKeys();
+
+    // Get coin price from coingecko API
+    try {
+      const coingeckoData = await coingecko.get(coinCode.toLowerCase());
+      coin.price = coingeckoData.data.market_data.current_price.usd;
+    } catch (error) {
+      errors.throwExposable('coingecko_API_error');
+    }
+
+    return coin;
   },
 
   async createCoin(coin) {

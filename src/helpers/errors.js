@@ -97,6 +97,11 @@ const ERRORS = [
     status: 400,
     description: 'Coin Code already exists.',
   },
+  {
+    code: 'coingecko_API_error',
+    status: 404,
+    description: "Couldn't get coin price.",
+  },
 
   // Internal
   {
