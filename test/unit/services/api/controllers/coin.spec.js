@@ -37,4 +37,21 @@ describe('Controller: Coin', () => {
       expect(CoinController.getCoinByCode(coinCode)).to.be.rejectedWith(Error, 'coingecko_API_error');
     });
   });
+
+  describe('createCoin', () => {
+    it('should create coin', async () => {
+      const newCoin = { name: 'Alex_coin', code: 'Alex' };
+      const coin = await CoinController.createCoin(newCoin);
+
+      expect(coin.code).to.eq(newCoin.code);
+      expect(coin.name).to.eq(newCoin.name);
+      expect(Object.keys(coin).length).to.eq(3);
+    });
+
+    it('should validate unique code', async () => {
+      const newCoin = { name: 'Bitcoin', code: 'BTC' };
+
+      expect(CoinController.createCoin(newCoin)).to.be.rejectedWith(Error, 'non_unique_coin_code');
+    });
+  });
 });
