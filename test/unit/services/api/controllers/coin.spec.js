@@ -4,7 +4,7 @@ const sequelizeMockingMocha = require('sequelize-mocking').sequelizeMockingMocha
 const CoinController = require(path.join(srcDir, '/services/api/controllers/coin'));
 const DB = require(path.join(srcDir, 'modules/db'));
 
-describe.only('Controller: Coin', () => {
+describe('Controller: Coin', () => {
   let sandbox = null;
 
   sequelizeMockingMocha(DB.sequelize, [path.resolve('test/mocks/coins.json')], { logging: false });
