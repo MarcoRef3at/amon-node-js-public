@@ -29,12 +29,12 @@ describe('Model:coin', () => {
   });
 
   it('Should validate unique code', async () => {
-    const coin1 = await Models.Coin.create({
+    await Models.Coin.create({
       name: 'Bitcoin Cash',
       code: 'BCH',
     });
     try {
-      const coin2 = await Models.Coin.create({
+      await Models.Coin.create({
         name: 'Bitcoin Cash',
         code: 'BCH',
       });
