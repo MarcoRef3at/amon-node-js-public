@@ -4,7 +4,7 @@ const sequelizeMockingMocha = require('sequelize-mocking').sequelizeMockingMocha
 const Models = require(path.join(srcDir, '/models/pg'));
 const DB = require(path.join(srcDir, 'modules/db'));
 
-describe.only('Model:coin', () => {
+describe('Model:coin', () => {
   let sandbox = null;
 
   sequelizeMockingMocha(DB.sequelize, [path.resolve('test/mocks/coins.json')], { logging: false });
