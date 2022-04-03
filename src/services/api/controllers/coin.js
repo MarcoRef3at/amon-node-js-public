@@ -34,7 +34,7 @@ const CoinController = {
       if (error.name == 'SequelizeUniqueConstraintError') {
         errors.throwExposable('non_unique_coin_code');
       } else {
-        errors.throwExposable('unknown_error', null, error.errors[0] && error.errors[0].message);
+        errors.throwExposable('unknown_error', null, error.description);
       }
     }
   },

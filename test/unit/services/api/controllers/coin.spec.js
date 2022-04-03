@@ -53,5 +53,16 @@ describe('Controller: Coin', () => {
 
       expect(CoinController.createCoin(newCoin)).to.be.rejectedWith(Error, 'non_unique_coin_code');
     });
+
+    it('should throw DB error', async () => {
+      const newCoin = { code: 'BTC' };
+
+      try {
+        await CoinController.createCoin(newCoin);
+      } catch (error) {
+        expect(error.message).to.eq('unknown_error');
+        expect(error.description).to.not.be.null;
+      }
+    });
   });
 });

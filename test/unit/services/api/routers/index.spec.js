@@ -37,6 +37,7 @@ describe('Router: MainRouter', () => {
     expect(use.callCount).to.be.eq(3);
     expect(use.calledWith(`statusRoutes`, `statusAllowedMethod`)).to.be.true;
     expect(use.calledWith(`robotsRoutes`, `robotsAllowedMethod`)).to.be.true;
+    expect(use.calledWith(`coinRoutes`, `coinAllowedMethod`)).to.be.true;
 
     function expectRouter(name) {
       expect(use.calledWith(`/${name}`, `${name}Routes`, `${name}AllowedMethod`)).to.be.true;
